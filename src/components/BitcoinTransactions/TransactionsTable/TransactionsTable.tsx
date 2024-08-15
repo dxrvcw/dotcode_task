@@ -1,6 +1,6 @@
-import { Fragment } from "react/jsx-runtime";
 import { Transaction } from "../../../utils/types";
 
+import { TransactionRow } from "./TransactionRow/TransactionRow";
 import styles from "./TransactionsTable.module.css";
 
 interface ITransactionTable {
@@ -14,11 +14,12 @@ export function TransactionTable({ transactions }: ITransactionTable) {
       <p className={styles.headerText}>To:</p>
       <p className={styles.headerText}>Amount:</p>
       {transactions.map((transaction) => (
-        <Fragment key={transaction.id}>
-          <p className={styles.dataText}>{transaction.from}</p>
-          <p className={styles.dataText}>{transaction.to}</p>
-          <p className={styles.dataText}>{transaction.amount}</p>
-        </Fragment>
+        <TransactionRow
+          key={transaction.id}
+          amount={transaction.amount}
+          from={transaction.from}
+          to={transaction.to}
+        />
       ))}
     </div>
   );

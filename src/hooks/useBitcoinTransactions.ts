@@ -1,12 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Transaction } from "../utils/types";
 import { uid } from "../utils/utils";
 import { closeWebSocket, createWebSocket } from "../utils/webSocketUtils";
-
-interface TransactionOutput {
-  addr: string;
-  value: number;
-}
 
 const WS_URL = "wss://ws.blockchain.info/inv";
 
@@ -16,39 +11,34 @@ export function useBitcoinTransactions() {
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    return () => {
-      stopSubscription();
-    };
+    return stopSubscription;
   }, []);
 
-  const stopSubscription = () => {
-    if (ws.current) {
-      closeWebSocket(ws.current);
-      ws.current = null;
-    }
-  };
-
-  const startSubscription = () => {
+  const startSubscription = useCallback(() => {
     ws.current = createWebSocket(
       WS_URL,
       "unconfirmed_sub",
       handleMessage,
-      (error) => {
-        console.error("WebSocket error:", error);
-      }
+      handleError
     );
-  };
+  }, []);
 
-  const resetData = () => {
+  const stopSubscription = useCallback(() => {
+    if (ws.current) {
+      closeWebSocket(ws.current);
+      ws.current = null;
+    }
+  }, []);
+
+  const resetData = useCallback(() => {
     setTransactions([]);
     setTotalAmount(0);
-  };
+  }, []);
 
-  const handleMessage = (event: MessageEvent) => {
+  const handleMessage = useCallback((event: MessageEvent) => {
     const data = JSON.parse(event.data);
-
     const fromAddress = data.x.inputs[0]?.prev_out.addr || "Unknown";
-    const toAddresses = data.x.out as TransactionOutput[];
+    const toAddresses = data.x.out as Array<{ addr: string; value: number }>;
 
     const newTransactions = toAddresses
       .map((output) => ({
@@ -57,20 +47,20 @@ export function useBitcoinTransactions() {
         to: output.addr,
         amount: output.value / 100000000, // Convert Satoshis to BTC
       }))
-      .filter((transaction) => transaction.amount > 0);
+      .filter(({ amount }) => amount > 0);
 
-    setTransactions((prevTransactions) => [
-      ...prevTransactions,
-      ...newTransactions,
-    ]);
+    if (newTransactions.length > 0) {
+      setTransactions((prev) => [...prev, ...newTransactions]);
+      setTotalAmount(
+        (prev) =>
+          prev + newTransactions.reduce((sum, { amount }) => sum + amount, 0)
+      );
+    }
+  }, []);
 
-    const newTransactionsAmount = newTransactions.reduce(
-      (sum, transaction) => sum + transaction.amount,
-      0
-    );
-
-    setTotalAmount((prevTotal) => prevTotal + newTransactionsAmount);
-  };
+  const handleError = useCallback((error: Event) => {
+    console.error("WebSocket error:", error);
+  }, []);
 
   return {
     transactions,
