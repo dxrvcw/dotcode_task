@@ -35,7 +35,9 @@ export function InteractiveDesktop() {
 	}
 
 	const handleLayoutChange = (layout: Layout[]) => {
-		setItems(layout)
+		if (JSON.stringify(items) !== JSON.stringify(layout)) {
+			setItems(layout)
+		}
 	}
 
 	return (
@@ -49,6 +51,8 @@ export function InteractiveDesktop() {
 				rowHeight={CELL_SIZE}
 				width={cols * CELL_SIZE}
 				margin={[0, 0]}
+				onDragStart={(_, item) => handleInteract(item.i)}
+				onResizeStart={(_, item) => handleInteract(item.i)}
 				onDragStop={handleLayoutChange}
 				onResizeStop={handleLayoutChange}
 				allowOverlap
