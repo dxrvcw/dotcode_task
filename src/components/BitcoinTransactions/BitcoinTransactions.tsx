@@ -18,13 +18,13 @@ export function BitcoinTransactions() {
       <h1 className={styles.title}>Bitcoin Transactions</h1>
       <div className={styles.controlContainer}>
         <Button className={styles.controlButton} onClick={startSubscription}>
-          Запуск
+          Start
         </Button>
         <Button className={styles.controlButton} onClick={stopSubscription}>
-          Зупинка
+          Stop
         </Button>
         <Button className={styles.controlButton} onClick={resetData}>
-          Скинути
+          Reset
         </Button>
       </div>
       <h2 className={styles.totalAmount}>Total sum: {totalAmount} BTC</h2>

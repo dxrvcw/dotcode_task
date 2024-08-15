@@ -1,51 +1,13 @@
-# React + TypeScript + Vite
+## Libraries/utilites:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**General:**
 
-Currently, two official plugins are available:
+- `react-router-dom` Used for handling routing. I think this is a best choice for react routing nowadays.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Task 1. Interactive desktop:**
 
-## Expanding the ESLint configuration
+- `react-grid-layout:` Used for creating an interactive desktop layout. It helps manage grid-based positioning, movement, and resizing of blocks effectively, easily and customizable.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**Task 2. Websocket connection:**
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# dotcode_task
+- `Default WebSocket:` Utilized to subscribe to transactions through the Blockchain WebSocket API. For this task, pure WebSocket is the optimal solution. While socket.io may be more suitable for more complex requirements or when working with custom servers, the default WebSocket offers a simpler, more appropriate approach here.
