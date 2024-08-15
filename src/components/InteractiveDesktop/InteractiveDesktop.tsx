@@ -51,14 +51,13 @@ export function InteractiveDesktop() {
 				margin={[0, 0]}
 				onDragStop={handleLayoutChange}
 				onResizeStop={handleLayoutChange}
-				onDrag={(_, item) => handleInteract(item.i)}
-				onResize={(_, item) => handleInteract(item.i)}
 				allowOverlap
 			>
 				{items.map(item => (
 					<DesktopItem
 						key={item.i}
 						id={item.i}
+						onClick={() => handleInteract(item.i)}
 						isSelected={selectedItemId === item.i}
 						title={`Title ${item.i}`}
 						removeItem={removeItem}
