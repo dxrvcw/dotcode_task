@@ -1,0 +1,10 @@
+.container {
+  width: 100%;
+}
+
+.resetButton {
+  margin-top: 10px;
+  margin-left: 30px;
+  color: white;
+  background-color: #d7554e;
+}

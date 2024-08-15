@@ -1,0 +1,20 @@
+.header {
+  width: 100%;
+  padding: 10px 50px;
+  border-bottom: 1px solid rgb(130, 130, 130);
+}
+
+.list {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+.linkItem {
+  text-decoration: none;
+  color: inherit;
+}
+
+.linkItem.active {
+  color: rgb(114, 114, 114);
+}
