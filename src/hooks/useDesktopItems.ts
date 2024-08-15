@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Layout } from 'react-grid-layout'
 
 const INITIAL_ITEMS: Layout[] = [
@@ -18,14 +18,14 @@ export function useDesktopItems() {
 		localStorage.setItem('desktopItems', JSON.stringify(items))
 	}, [items])
 
-	const removeItem = (id: string) => {
+	const removeItem = useCallback((id: string) => {
 		setItems(prevItems => prevItems.filter(item => item.i !== id))
-	}
+	}, [])
 
-	const resetItems = () => {
+	const resetItems = useCallback(() => {
 		setItems(INITIAL_ITEMS)
 		setSelectedItemId('')
-	}
+	}, [])
 
 	return {
 		items,

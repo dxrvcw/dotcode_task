@@ -12,7 +12,7 @@ describe('DesktopItem Component', () => {
 			<DesktopItem
 				id='1'
 				title='Item Title'
-				selected={true}
+				isSelected={true}
 				removeItem={removeItem}
 			>
 				<div>Child Content</div>
@@ -29,7 +29,7 @@ describe('DesktopItem Component', () => {
 			<DesktopItem
 				id='1'
 				title='Item Title'
-				selected={false}
+				isSelected={false}
 				removeItem={removeItem}
 			/>
 		)
